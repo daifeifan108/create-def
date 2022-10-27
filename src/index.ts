@@ -33,6 +33,7 @@ const FRAMEWORKS: Framework[] = [{
     }]
 }]
 const TEMPLATES = FRAMEWORKS.map(fk => (fk.variants && fk.variants.map(v => v.name)) || [fk.name]).reduce((p, c) => p.concat(c), [])
+/** 默认的项目名称 */
 const defautlDir = 'def-project'
 const cwd = process.cwd()
 const program = new Command()
@@ -44,7 +45,9 @@ program
     })
     .parse()
 async function init(name: any, options: any) {
+    /** 命令行参数传入的项目名称 */
     const argDir = name
+    /** 是否在命令行指定项目名称 */
     const hasArgDir = argDir && argDir !== true
     let result: ProjectAttributeVo
     try {
@@ -59,6 +62,7 @@ async function init(name: any, options: any) {
             name: 'overwrite',
             message: 'target directory is not empty. Remove existing files and continue?',
             when: function(ans) {
+                /** 返回是否存在同名目录 */
                 return fs.existsSync(ans.projectName)
             },
             validate(input) {
@@ -71,10 +75,14 @@ async function init(name: any, options: any) {
             type: 'list',
             name: 'framework',
             message: function() {
+                /** 判断命令行指定的模板是否存在 */
                 if (typeof options.template === 'string' && TEMPLATES.includes(options.template)) {
                     return `"${options.template}" isn't a valid template. Please choose from below: `
                 }
                 return reset('Select a framework:')
+            },
+            when: function(ans) {
+                return typeof options.template !== "string" || !TEMPLATES.includes(options.template)
             },
             choices: FRAMEWORKS.map((fk) => {
                 const clr = fk.color
@@ -97,7 +105,7 @@ async function init(name: any, options: any) {
                 })
             }
         }])
-        const { projectName, overwrite, framework, variants } = result
+        const { projectName = (argDir || defautlDir), overwrite, framework, variants } = result
         const root = path.join(cwd, projectName)
         if (overwrite) {
             emptyDir(root)
