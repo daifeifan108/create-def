@@ -1,0 +1,53 @@
+{
+  "name": "create-def",
+  "version": "1.0.0",
+  "description": "The CLI for building web application",
+  "bin": {
+    "create-def": "index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "unbuild",
+    "prepublishOnly": "npm run build"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daifeifan108/create-def.git"
+  },
+  "files": [
+    "index.js",
+    "templates",
+    "dist"
+  ],
+  "keywords": [
+    "cli",
+    "脚手架"
+  ],
+  "engines": {
+    "node": "^14.18.0 || >=16.0.0"
+  },
+  "author": "daifeifan108",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/daifeifan108/create-def/issues"
+  },
+  "homepage": "https://github.com/daifeifan108/create-def#readme",
+  "dependencies": {
+    "commander": "^9.4.1",
+    "inquirer": "^9.1.4",
+    "kolorist": "^1.6.0",
+    "unbuild": "^0.9.4"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.2",
+    "@types/node": "^18.11.4",
+    "@typescript-eslint/eslint-plugin": "^5.40.1",
+    "eslint": "^8.26.0",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.3.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "typescript": "^4.8.4"
+  }
+}
